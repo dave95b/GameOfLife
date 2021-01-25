@@ -2,7 +2,7 @@
 {
     public readonly struct GameState
     {
-        public ref int this[int x, int y] => ref state[x][y];
+        public ref int this[int x, int y] => ref state[y][x];
 
         public readonly int Width, Height;
 

@@ -14,9 +14,11 @@ namespace GameOfLive.ViewModel
 
         private void Awake()
         {
-            solver = new Solver1();
+            solver = new Solver2();
             solver.Init(20, 20);
             gameState = new GameState(20, 20);
+
+            Init();
         }
 
         private void Start()
@@ -31,6 +33,15 @@ namespace GameOfLive.ViewModel
                 gameState = solver.Solve(gameState);
                 OnGameUpdated?.Invoke(gameState);
             }
+        }
+
+        private void Init()
+        {
+            gameState[2, 1] = 1;
+            gameState[3, 2] = 1;
+            gameState[1, 3] = 1;
+            gameState[2, 3] = 1;
+            gameState[3, 3] = 1;
         }
     }
 }

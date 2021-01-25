@@ -20,11 +20,15 @@ namespace GameOfLive.View
 
         private void UpdateView(GameState gameState)
         {
-            for (int i = 0; i < images.Length; i++)
+            for (int i = 0; i < gameState.Height; i++)
             {
-                var image = images[i];
-                bool state = gameState[i / gameState.Height, i % gameState.Width] == 1;
-                image.enabled = state;
+                for (int j = 0; j < gameState.Width; j++)
+                {
+                    int imageIndex = i * gameState.Width + j;
+                    var image = images[imageIndex];
+                    bool state = gameState[j, i] == 1;
+                    image.enabled = state;
+                }
             }
         }
 

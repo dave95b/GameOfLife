@@ -16,10 +16,10 @@ namespace GameOfLive.Logic
         {
             GameState result = other;
 
-            for (int i = 0; i < current.Width; i++)
+            for (int i = 0; i < current.Height; i++)
             {
-                for (int j = 0; j < current.Height; j++)
-                    result[i, j] = Random.value > 0.5f ? 0 : 1;
+                for (int j = 0; j < current.Width; j++)
+                    result[j, i] = Random.value > 0.5f ? 0 : 1;
             }
 
             other = current;
@@ -41,20 +41,54 @@ namespace GameOfLive.Logic
         {
             GameState result = other;
 
-            //for (int i = 0; i < current.Width; i++)
-            //{
-            //    for (int j = 0; j < current.Height; j++)
-            //        result[i, j] = Random.value > 0.5f;
-            //}
+            for (int i = 0; i < current.Height; i++)
+            {
+                for (int j = 0; j < current.Width; j++)
+                {
+                    int count = GetNeighbourCount(current, j, i);
+
+                    if (count == 3)
+                        result[j, i] = 1;
+                    else if (count == 2 && current[j, i] == 1)
+                        result[j, i] = 1;
+                    else
+                        result[j, i] = 0;
+                }
+            }
 
             other = current;
 
             return result;
         }
 
-        private int GetNeighbourCount(int x, int y)
+        private int GetNeighbourCount(in GameState state, int x, int y)
         {
-            return 0;
+            int count = 0;
+
+            if (y - 1 >= 0)
+            {
+                if (x - 1 >= 0)
+                    count += state[x - 1, y - 1];
+                count += state[x, y - 1];
+                if (x + 1 < state.Width)
+                    count += state[x + 1, y - 1];
+            }
+
+            if (x - 1 >= 0)
+                count += state[x - 1, y];
+            if (x + 1 < state.Width)
+                count += state[x + 1, y];
+
+            if (y + 1 < state.Height)
+            {
+                if (x - 1 >= 0)
+                    count += state[x - 1, y + 1];
+                count += state[x, y + 1];
+                if (x + 1 < state.Width)
+                    count += state[x + 1, y + 1];
+            }
+
+            return count;
         }
     }
 }
