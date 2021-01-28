@@ -54,14 +54,15 @@ namespace GameOfLive.View
 
         private void UpdateView(GameState gameState)
         {
+            int imageIndex = 0;
             for (int i = 0; i < gameState.Height; i++)
             {
                 for (int j = 0; j < gameState.Width; j++)
                 {
-                    int imageIndex = i * gameState.Width + j;
                     var image = images[imageIndex];
                     bool state = gameState[j, i] == 1;
                     image.enabled = state;
+                    imageIndex++;
                 }
             }
         }
@@ -75,7 +76,7 @@ namespace GameOfLive.View
             const int sizeFactor = 128;
             float maxHeight = sizeFactor * camHeight;
             float maxWidth = sizeFactor * camWidth;
-            float gridSize = Mathf.Min(maxHeight, maxWidth) / gameState.Height;
+            float gridSize = Mathf.Min(maxHeight, maxWidth) / Mathf.Max(gameState.Width, gameState.Height);
             return gridSize;
         }
 
