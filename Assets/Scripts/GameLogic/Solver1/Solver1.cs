@@ -65,28 +65,16 @@ namespace GameOfLive.Logic
         {
             int count = 0;
 
-            if (y - 1 >= 0)
-            {
-                if (x - 1 >= 0)
-                    count += state[x - 1, y - 1];
-                count += state[x, y - 1];
-                if (x + 1 < state.Width)
-                    count += state[x + 1, y - 1];
-            }
+            count += state[x - 1, y - 1];
+            count += state[x, y - 1];
+            count += state[x + 1, y - 1];
 
-            if (x - 1 >= 0)
-                count += state[x - 1, y];
-            if (x + 1 < state.Width)
-                count += state[x + 1, y];
+            count += state[x - 1, y];
+            count += state[x + 1, y];
 
-            if (y + 1 < state.Height)
-            {
-                if (x - 1 >= 0)
-                    count += state[x - 1, y + 1];
-                count += state[x, y + 1];
-                if (x + 1 < state.Width)
-                    count += state[x + 1, y + 1];
-            }
+            count += state[x - 1, y + 1];
+            count += state[x, y + 1];
+            count += state[x + 1, y + 1];
 
             return count;
         }

@@ -2,7 +2,7 @@
 {
     public readonly struct GameState
     {
-        public ref int this[int x, int y] => ref state[y][x];
+        public ref int this[int x, int y] => ref state[y + 1][x + 1];
 
         public readonly int Width, Height;
 
@@ -13,9 +13,9 @@
             Width = width;
             Height = height;
 
-            state = new int[height][];
-            for (int i = 0; i < width; i++)
-                state[i] = new int[width];
+            state = new int[height + 2][];
+            for (int i = 0; i < height + 2; i++)
+                state[i] = new int[width + 2];
         }
     }
 }
