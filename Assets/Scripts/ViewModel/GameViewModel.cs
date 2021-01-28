@@ -8,7 +8,11 @@ namespace GameOfLive.ViewModel
 {
     public class GameViewModel : MonoBehaviour
     {
+        public event Action<GameState> OnGameCreated;
         public event Action<GameState> OnGameUpdated;
+
+        [SerializeField]
+        private int width = 20, height = 20;
 
         [SerializeField]
         private bool interval = true;
@@ -23,20 +27,58 @@ namespace GameOfLive.ViewModel
 
         private float totalSolveTime = 0f;
         private int generations = 0;
+        private bool first = true;
 
         private void Awake()
         {
-            solver = new Solver2();
-            solver.Init(20, 20);
-            gameState = new GameState(20, 20);
+            solver = new Solver();
+            solver.Init(width, height);
+            gameState = new GameState(width, height);
 
-            Init();
+            ShapeCreator.Glider(gameState,  5, 1);
+
+            int x = 5, y = 6;
+            ShapeCreator.Diehard(gameState, x, y);
+            ShapeCreator.Diehard(gameState, x, y + 4);
+            ShapeCreator.Diehard(gameState, x, y + 8);
+            ShapeCreator.Diehard(gameState, x, y + 11);
+            ShapeCreator.Diehard(gameState, x + 10, y);
+            ShapeCreator.Diehard(gameState, x + 10, y + 4);
+            ShapeCreator.Diehard(gameState, x + 10, y + 8);
+            ShapeCreator.Diehard(gameState, x + 10, y + 11);
+            ShapeCreator.Diehard(gameState, x + 20, y);
+            ShapeCreator.Diehard(gameState, x + 20, y + 4);
+            ShapeCreator.Diehard(gameState, x + 20, y + 8);
+            ShapeCreator.Diehard(gameState, x + 20, y + 11);
+            ShapeCreator.Diehard(gameState, x + 30, y);
+            ShapeCreator.Diehard(gameState, x + 30, y + 4);
+            ShapeCreator.Diehard(gameState, x + 30, y + 8);
+            ShapeCreator.Diehard(gameState, x + 30, y + 11);
+
+            x = 5;
+            y = 22;
+            ShapeCreator.Diehard(gameState, x, y);
+            ShapeCreator.Diehard(gameState, x, y + 4);
+            ShapeCreator.Diehard(gameState, x, y + 8);
+            ShapeCreator.Diehard(gameState, x, y + 11);
+            ShapeCreator.Diehard(gameState, x + 10, y);
+            ShapeCreator.Diehard(gameState, x + 10, y + 4);
+            ShapeCreator.Diehard(gameState, x + 10, y + 8);
+            ShapeCreator.Diehard(gameState, x + 10, y + 11);
+            ShapeCreator.Diehard(gameState, x + 20, y);
+            ShapeCreator.Diehard(gameState, x + 20, y + 4);
+            ShapeCreator.Diehard(gameState, x + 20, y + 8);
+            ShapeCreator.Diehard(gameState, x + 20, y + 11);
+            ShapeCreator.Diehard(gameState, x + 30, y);
+            ShapeCreator.Diehard(gameState, x + 30, y + 4);
+            ShapeCreator.Diehard(gameState, x + 30, y + 8);
+            ShapeCreator.Diehard(gameState, x + 30, y + 11);
             timer = intervalTime;
         }
 
         private void Start()
         {
-            OnGameUpdated?.Invoke(gameState);
+            OnGameCreated?.Invoke(gameState);
         }
 
         private void Update()
@@ -53,47 +95,18 @@ namespace GameOfLive.ViewModel
             var s = Stopwatch.StartNew();
             gameState = solver.Solve(gameState);
             s.Stop();
-            float solveTime = (float) s.Elapsed.TotalMilliseconds;
-            totalSolveTime += solveTime;
-            generations++;
 
-            UnityEngine.Debug.LogError($"Solve time: {solveTime} ms | Average: {totalSolveTime / generations} ms");
+            if (!first)
+            {
+                float solveTime = (float)s.Elapsed.TotalMilliseconds;
+                totalSolveTime += solveTime;
+                generations++;
+
+                UnityEngine.Debug.LogError($"Solve time: {solveTime} ms | Average: {totalSolveTime / generations} ms");
+            }
 
             OnGameUpdated?.Invoke(gameState);
-        }
-
-        private void Init()
-        {
-            gameState[7, 9] = 1;
-            gameState[9, 10] = 1;
-
-            gameState[6, 11] = 1;
-            gameState[7, 11] = 1;
-            gameState[10, 11] = 1;
-            gameState[11, 11] = 1;
-            gameState[12, 11] = 1;
-        }
-
-        private void Init3()
-        {
-            gameState[6, 6] = 1;
-            gameState[7, 6] = 1;
-            gameState[8, 6] = 1;
-            gameState[6, 7] = 1;
-
-            gameState[8, 8] = 1;
-            gameState[7, 9] = 1;
-            gameState[8, 9] = 1;
-            gameState[6, 9] = 1;
-        }
-
-        private void Init2() // glider
-        {
-            gameState[2, 1] = 1;
-            gameState[3, 2] = 1;
-            gameState[1, 3] = 1;
-            gameState[2, 3] = 1;
-            gameState[3, 3] = 1;
+            first = false;
         }
 
         private void UpdateTimer()
