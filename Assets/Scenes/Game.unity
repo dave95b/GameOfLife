@@ -358,7 +358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 50
-  height: 50
+  height: 200
   interval: 1
   intervalTime: 0.05
 --- !u!1 &1826785985

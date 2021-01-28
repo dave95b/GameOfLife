@@ -19,7 +19,7 @@ namespace GameOfLive.Logic
             mainDirty.Fill();
         }
 
-        public GameState Solve2(GameState current)
+        public GameState Solve(GameState current)
         {
             GameState result = other;
             secDirty.Clear();
@@ -43,7 +43,7 @@ namespace GameOfLive.Logic
                 if (currentValue != resultValue)
                     secDirty.Add(x, y);
 
-                result[x, y] = resultValue;
+                result[x, y] = (char)resultValue;
             }
 
             other = current;
@@ -55,7 +55,7 @@ namespace GameOfLive.Logic
             return result;
         }
 
-        public GameState Solve(GameState current)
+        public GameState Solve2(GameState current)
         {
             GameState result = other;
 
@@ -64,12 +64,12 @@ namespace GameOfLive.Logic
                 for (int j = 0; j < current.Width; j++)
                 {
                     int count = GetNeighbourCount(current, j, i);
-                    int resultValue = 0;
+                    char resultValue = (char)0;
 
                     if (count == 3)
-                        resultValue = 1;
+                        resultValue = (char)1;
                     else if (count == 2 && current[j, i] == 1)
-                        resultValue = 1;
+                        resultValue = (char)1;
 
                     result[j, i] = resultValue;
                 }
@@ -82,20 +82,14 @@ namespace GameOfLive.Logic
 
         private int GetNeighbourCount(in GameState state, int x, int y)
         {
-            int count = 0;
-
-            count += state[x - 1, y - 1];
-            count += state[x, y - 1];
-            count += state[x + 1, y - 1];
-
-            count += state[x - 1, y];
-            count += state[x + 1, y];
-
-            count += state[x - 1, y + 1];
-            count += state[x, y + 1];
-            count += state[x + 1, y + 1];
-
-            return count;
+            return state[x - 1, y - 1]
+                + state[x, y - 1]
+                + state[x + 1, y - 1]
+                + state[x - 1, y]
+                + state[x + 1, y]
+                + state[x - 1, y + 1]
+                + state[x, y + 1]
+                + state[x + 1, y + 1];
         }
     }
 
