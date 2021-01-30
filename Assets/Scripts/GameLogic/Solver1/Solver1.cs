@@ -10,8 +10,11 @@ namespace GameOfLive.Logic
 
         private DirtyFields mainDirty, secDirty;
 
-        public void Init(int width, int height)
+        public void Init(in GameState current)
         {
+            int width = current.Width;
+            int height = current.Height;
+
             other = new GameState(width, height);
             mainDirty = new DirtyFields(width, height);
             secDirty = new DirtyFields(width, height);
@@ -19,7 +22,7 @@ namespace GameOfLive.Logic
             mainDirty.Fill();
         }
 
-        public GameState Solve2(GameState current)
+        public GameState Solve2(in GameState current)
         {
             GameState result = other;
             secDirty.Clear();
@@ -55,7 +58,7 @@ namespace GameOfLive.Logic
             return result;
         }
 
-        public GameState Solve(GameState current)
+        public GameState Solve(in GameState current)
         {
             GameState result = other;
 
@@ -64,14 +67,7 @@ namespace GameOfLive.Logic
                 for (int j = 0; j < current.Width; j++)
                 {
                     int count = GetNeighbourCount(current, j, i);
-                    byte resultValue = 0;
-
-                    if (count == 3)
-                        resultValue = 1;
-                    else if (count == 2 && current[j, i] == 1)
-                        resultValue = 1;
-
-                    result[j, i] = resultValue;
+                    result[j, i] = (byte)((count == 3) || (count == 2 && current[j, i] == 1) ? 1 : 0);
                 }
             }
 

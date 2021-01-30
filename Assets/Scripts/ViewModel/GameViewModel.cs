@@ -36,7 +36,6 @@ namespace GameOfLive.ViewModel
         {
             //solver = new Solver();
             solver = new ComputeSolver(computeSolver);
-            solver.Init(width, height);
             gameState = new GameState(width, height);
 
             //ShapeCreator.Pulsar(gameState, 4, 10);
@@ -50,7 +49,8 @@ namespace GameOfLive.ViewModel
             //ShapeCreator.Pulsar(gameState, 4, 90);
             //ShapeCreator.Pulsar(gameState, 20, 90);
 
-            ShapeCreator.Rectangle(gameState, width-2, height-2, 1, 1);
+            ShapeCreator.Rectangle(gameState, width - 2, height - 2, 1, 1);
+            solver.Init(gameState);
 
             timer = intervalTime;
         }

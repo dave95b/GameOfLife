@@ -4,7 +4,7 @@ namespace GameOfLive.Logic
 {
     public interface ISolver
     {
-        void Init(int width, int height);
-        GameState Solve(GameState current);
+        void Init(in GameState current);
+        GameState Solve(in GameState current);
     }
 }

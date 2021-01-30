@@ -2,27 +2,27 @@
 
 namespace GameOfLive.Model
 {
-    public readonly struct GameState2
-    {
-        public ref byte this[int x, int y] => ref state[y + 1][x + 1];
+    //public readonly struct GameState
+    //{
+    //    public ref byte this[int x, int y] => ref State[y + 1][x + 1];
 
-        public readonly int Width, Height;
+    //    public readonly int Width, Height;
 
-        private readonly byte[][] state;
+    //    public readonly byte[][] State;
 
-        public GameState2(int width, int height) : this()
-        {
-            Width = width;
-            Height = height;
+    //    public GameState(int width, int height) : this()
+    //    {
+    //        Width = width;
+    //        Height = height;
 
-            state = new byte[height + 2][];
-            for (int i = 0; i < height + 2; i++)
-                state[i] = new byte[width + 2];
-        }
+    //        State = new byte[height + 2][];
+    //        for (int i = 0; i < height + 2; i++)
+    //            State[i] = new byte[width + 2];
+    //    }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Activate(int x, int y) => this[x, y] = 1;
-    }
+    //    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //    public void Activate(int x, int y) => this[x, y] = 1;
+    //}
 
     // For compute shader
     public readonly struct GameState
