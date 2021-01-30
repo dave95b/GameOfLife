@@ -1,4 +1,6 @@
-﻿namespace GameOfLive.Model
+﻿using System.Runtime.CompilerServices;
+
+namespace GameOfLive.Model
 {
     public readonly struct GameState
     {
@@ -17,7 +19,11 @@
             for (int i = 0; i < height + 2; i++)
                 state[i] = new char[width + 2];
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Activate(int x, int y) => this[x, y] = (char)1;
     }
+
     public readonly struct GameState2
     {
         public ref int this[int x, int y] => ref state[y + 1][x + 1];
