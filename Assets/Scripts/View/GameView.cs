@@ -1,11 +1,10 @@
 ﻿using GameOfLive.Model;
-using GameOfLive.ViewModel;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace GameOfLive.View
 {
-    public class GameView : MonoBehaviour
+    public class GameView : BaseView
     {
         [SerializeField]
         private RawImage[] images;
@@ -14,18 +13,9 @@ namespace GameOfLive.View
         private RawImage prefab;
 
         [SerializeField]
-        private GameViewModel viewModel;
+        private GridLayoutGroup grid;
 
-        [SerializeField]
-        GridLayoutGroup grid;
-
-        private void Awake()
-        {
-            viewModel.OnGameCreated += CreateView;
-            viewModel.OnGameUpdated += UpdateView;
-        }
-
-        private void CreateView(GameState gameState)
+        protected override void CreateView(GameState gameState)
         {
             UpdateGridProperties(gameState);
             CreateCells(gameState);
@@ -52,7 +42,7 @@ namespace GameOfLive.View
                 images[i] = Instantiate(prefab, parent);
         }
 
-        private void UpdateView(GameState gameState)
+        protected override void UpdateView(GameState gameState)
         {
             int imageIndex = 0;
             for (int i = 0; i < gameState.Height; i++)

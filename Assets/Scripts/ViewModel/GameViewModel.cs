@@ -35,44 +35,16 @@ namespace GameOfLive.ViewModel
             solver.Init(width, height);
             gameState = new GameState(width, height);
 
-            ShapeCreator.Glider(gameState,  5, 1);
-
-            int x = 5, y = 6;
-            ShapeCreator.Diehard(gameState, x, y);
-            ShapeCreator.Diehard(gameState, x, y + 4);
-            ShapeCreator.Diehard(gameState, x, y + 8);
-            ShapeCreator.Diehard(gameState, x, y + 11);
-            ShapeCreator.Diehard(gameState, x + 10, y);
-            ShapeCreator.Diehard(gameState, x + 10, y + 4);
-            ShapeCreator.Diehard(gameState, x + 10, y + 8);
-            ShapeCreator.Diehard(gameState, x + 10, y + 11);
-            ShapeCreator.Diehard(gameState, x + 20, y);
-            ShapeCreator.Diehard(gameState, x + 20, y + 4);
-            ShapeCreator.Diehard(gameState, x + 20, y + 8);
-            ShapeCreator.Diehard(gameState, x + 20, y + 11);
-            ShapeCreator.Diehard(gameState, x + 30, y);
-            ShapeCreator.Diehard(gameState, x + 30, y + 4);
-            ShapeCreator.Diehard(gameState, x + 30, y + 8);
-            ShapeCreator.Diehard(gameState, x + 30, y + 11);
-
-            x = 5;
-            y = 22;
-            ShapeCreator.Diehard(gameState, x, y);
-            ShapeCreator.Diehard(gameState, x, y + 4);
-            ShapeCreator.Diehard(gameState, x, y + 8);
-            ShapeCreator.Diehard(gameState, x, y + 11);
-            ShapeCreator.Diehard(gameState, x + 10, y);
-            ShapeCreator.Diehard(gameState, x + 10, y + 4);
-            ShapeCreator.Diehard(gameState, x + 10, y + 8);
-            ShapeCreator.Diehard(gameState, x + 10, y + 11);
-            ShapeCreator.Diehard(gameState, x + 20, y);
-            ShapeCreator.Diehard(gameState, x + 20, y + 4);
-            ShapeCreator.Diehard(gameState, x + 20, y + 8);
-            ShapeCreator.Diehard(gameState, x + 20, y + 11);
-            ShapeCreator.Diehard(gameState, x + 30, y);
-            ShapeCreator.Diehard(gameState, x + 30, y + 4);
-            ShapeCreator.Diehard(gameState, x + 30, y + 8);
-            ShapeCreator.Diehard(gameState, x + 30, y + 11);
+            ShapeCreator.Pulsar(gameState, 4, 40);
+            ShapeCreator.Pulsar(gameState, 20, 40);
+            ShapeCreator.Pulsar(gameState, 4, 60);
+            ShapeCreator.Pulsar(gameState, 20, 60);
+            ShapeCreator.Pulsar(gameState, 4, 80);
+            ShapeCreator.Pulsar(gameState, 20, 80);
+            ShapeCreator.Pulsar(gameState, 4, 100);
+            ShapeCreator.Pulsar(gameState, 20, 100);
+            ShapeCreator.Pulsar(gameState, 4, 120);
+            ShapeCreator.Pulsar(gameState, 20, 120);
             timer = intervalTime;
         }
 
