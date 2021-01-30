@@ -20,6 +20,9 @@ namespace GameOfLive.ViewModel
         [SerializeField]
         private float intervalTime = 1f;
 
+        [SerializeField]
+        private ComputeShader computeSolver;
+
         private ISolver solver;
         private GameState gameState;
 
@@ -31,20 +34,24 @@ namespace GameOfLive.ViewModel
 
         private void Awake()
         {
-            solver = new Solver();
+            //solver = new Solver();
+            solver = new ComputeSolver(computeSolver);
             solver.Init(width, height);
             gameState = new GameState(width, height);
 
-            ShapeCreator.Pulsar(gameState, 4, 40);
-            ShapeCreator.Pulsar(gameState, 20, 40);
-            ShapeCreator.Pulsar(gameState, 4, 60);
-            ShapeCreator.Pulsar(gameState, 20, 60);
-            ShapeCreator.Pulsar(gameState, 4, 80);
-            ShapeCreator.Pulsar(gameState, 20, 80);
-            ShapeCreator.Pulsar(gameState, 4, 100);
-            ShapeCreator.Pulsar(gameState, 20, 100);
-            ShapeCreator.Pulsar(gameState, 4, 120);
-            ShapeCreator.Pulsar(gameState, 20, 120);
+            //ShapeCreator.Pulsar(gameState, 4, 10);
+            //ShapeCreator.Pulsar(gameState, 20, 10);
+            //ShapeCreator.Pulsar(gameState, 4, 30);
+            //ShapeCreator.Pulsar(gameState, 20, 30);
+            //ShapeCreator.Pulsar(gameState, 4, 50);
+            //ShapeCreator.Pulsar(gameState, 20, 50);
+            //ShapeCreator.Pulsar(gameState, 4, 70);
+            //ShapeCreator.Pulsar(gameState, 20, 70);
+            //ShapeCreator.Pulsar(gameState, 4, 90);
+            //ShapeCreator.Pulsar(gameState, 20, 90);
+
+            ShapeCreator.Rectangle(gameState, width-2, height-2, 1, 1);
+
             timer = intervalTime;
         }
 

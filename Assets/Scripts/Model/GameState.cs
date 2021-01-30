@@ -2,44 +2,46 @@
 
 namespace GameOfLive.Model
 {
-    public readonly struct GameState
-    {
-        public ref char this[int x, int y] => ref state[y + 1][x + 1];
-
-        public readonly int Width, Height;
-
-        private readonly char[][] state;
-
-        public GameState(int width, int height) : this()
-        {
-            Width = width;
-            Height = height;
-
-            state = new char[height + 2][];
-            for (int i = 0; i < height + 2; i++)
-                state[i] = new char[width + 2];
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Activate(int x, int y) => this[x, y] = (char)1;
-    }
-
     public readonly struct GameState2
     {
-        public ref int this[int x, int y] => ref state[y + 1][x + 1];
+        public ref byte this[int x, int y] => ref state[y + 1][x + 1];
 
         public readonly int Width, Height;
 
-        private readonly int[][] state;
+        private readonly byte[][] state;
 
         public GameState2(int width, int height) : this()
         {
             Width = width;
             Height = height;
 
-            state = new int[height + 2][];
+            state = new byte[height + 2][];
             for (int i = 0; i < height + 2; i++)
-                state[i] = new int[width + 2];
+                state[i] = new byte[width + 2];
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Activate(int x, int y) => this[x, y] = 1;
+    }
+
+    // For compute shader
+    public readonly struct GameState
+    {
+        public ref int this[int x, int y] => ref State[(x + 1) + (y + 1) * (Width + 2)];
+
+        public readonly int Width, Height;
+
+        public readonly int[] State;
+
+        public GameState(int width, int height) : this()
+        {
+            Width = width;
+            Height = height;
+
+            State = new int[(height + 2) * (width + 2)];
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Activate(int x, int y) => this[x, y] = 1;
     }
 }

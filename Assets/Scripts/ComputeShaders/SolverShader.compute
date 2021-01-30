@@ -1,0 +1,46 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+RWStructuredBuffer<uint> CurrentGS, ResultGS;
+uint Width, Height;
+
+
+int GetNeighbourCount(int x, int y)
+{
+	return CurrentGS[x - 1 + (y - 1) * Width]
+		+ CurrentGS[x + (y - 1) * Width]
+		+ CurrentGS[x + 1 + (y - 1) * Width]
+		+ CurrentGS[x - 1 + y * Width]
+		+ CurrentGS[x + 1 + y * Width]
+		+ CurrentGS[x - 1 + (y + 1) * Width]
+		+ CurrentGS[x + (y + 1) * Width]
+		+ CurrentGS[x + 1 + (y + 1) * Width];
+}
+
+[numthreads(1,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	uint steps = Height / 8;
+	int start = 1 + id.x * steps;
+	int end = start + steps;
+
+	uint steps2 = Width / 8;
+	int start2 = 1 + id.y * steps2;
+	int end2 = start2 + steps2;
+
+	for (int i = start; i < end; i++)
+	{
+		for (int j = start2; j < end2; j++)
+		{
+			int count = GetNeighbourCount(j, i);
+			int resultValue = 0;
+
+			if (count == 3)
+				resultValue = 1;
+			else if (count == 2 && CurrentGS[j + i * Width] == 1)
+				resultValue = 1;
+
+			ResultGS[j + i * Width] = resultValue;
+		}
+	}
+}

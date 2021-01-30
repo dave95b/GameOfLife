@@ -19,7 +19,7 @@ namespace GameOfLive.Logic
             mainDirty.Fill();
         }
 
-        public GameState Solve(GameState current)
+        public GameState Solve2(GameState current)
         {
             GameState result = other;
             secDirty.Clear();
@@ -33,7 +33,7 @@ namespace GameOfLive.Logic
 
                 int count = GetNeighbourCount(current, x, y);
                 int currentValue = current[x, y];
-                int resultValue = 0;
+                byte resultValue = 0;
 
                 if (count == 3)
                     resultValue = 1;
@@ -43,7 +43,7 @@ namespace GameOfLive.Logic
                 if (currentValue != resultValue)
                     secDirty.Add(x, y);
 
-                result[x, y] = (char)resultValue;
+                result[x, y] = resultValue;
             }
 
             other = current;
@@ -55,7 +55,7 @@ namespace GameOfLive.Logic
             return result;
         }
 
-        public GameState Solve2(GameState current)
+        public GameState Solve(GameState current)
         {
             GameState result = other;
 
@@ -64,12 +64,12 @@ namespace GameOfLive.Logic
                 for (int j = 0; j < current.Width; j++)
                 {
                     int count = GetNeighbourCount(current, j, i);
-                    char resultValue = (char)0;
+                    byte resultValue = 0;
 
                     if (count == 3)
-                        resultValue = (char)1;
+                        resultValue = 1;
                     else if (count == 2 && current[j, i] == 1)
-                        resultValue = (char)1;
+                        resultValue = 1;
 
                     result[j, i] = resultValue;
                 }
