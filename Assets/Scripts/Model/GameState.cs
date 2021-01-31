@@ -28,6 +28,7 @@ namespace GameOfLive.Model
     public readonly struct GameState
     {
         public ref int this[int x, int y] => ref State[(x + 1) + (y + 1) * (Width + 2)];
+        public ref int this[int i] => ref State[i];
 
         public readonly int Width, Height;
 
