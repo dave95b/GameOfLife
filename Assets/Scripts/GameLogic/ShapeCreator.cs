@@ -1,4 +1,5 @@
 ﻿using GameOfLive.Model;
+using System;
 
 namespace GameOfLive.Logic
 {
@@ -64,6 +65,15 @@ namespace GameOfLive.Logic
         {
             for (int i = 0; i < height; i++)
                 HorizontalLine(gameState, width, x, y + i);
+        }
+
+        public static void Randomize(in GameState gameState)
+        {
+            for (int i = 0; i < gameState.Height; i++)
+            {
+                for (int j = 0; j < gameState.Width; j++)
+                    gameState[j, i] = UnityEngine.Random.value < 0.5f ? 1 : 0;
+            }
         }
     }
 }

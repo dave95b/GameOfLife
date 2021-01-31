@@ -34,9 +34,17 @@ namespace GameOfLive.ViewModel
 
         private void Awake()
         {
-            //solver = new Solver();
-            solver = new ComputeSolver(computeSolver);
+            solver = new Solver();
+            //solver = new ComputeSolver(computeSolver);
             gameState = new GameState(width, height);
+
+            ShapeCreator.Randomize(gameState);
+
+            //for (int i = 50; i < gameState.Height - 50; i += 50)
+            //{
+            //    for (int j = 50; j < gameState.Width - 50; j += 50)
+            //        ShapeCreator.Diehard(gameState, j, i);
+            //}
 
             //ShapeCreator.Pulsar(gameState, 4, 10);
             //ShapeCreator.Pulsar(gameState, 20, 10);
@@ -49,7 +57,7 @@ namespace GameOfLive.ViewModel
             //ShapeCreator.Pulsar(gameState, 4, 90);
             //ShapeCreator.Pulsar(gameState, 20, 90);
 
-            ShapeCreator.Rectangle(gameState, width - 2, height - 2, 1, 1);
+            //ShapeCreator.Rectangle(gameState, width - 2, height - 2, 1, 1);
             solver.Init(gameState);
 
             timer = intervalTime;
@@ -71,18 +79,18 @@ namespace GameOfLive.ViewModel
 
         private void Solve()
         {
-            var s = Stopwatch.StartNew();
+            //var s = Stopwatch.StartNew();
             gameState = solver.Solve(gameState);
-            s.Stop();
+            //s.Stop();
 
-            if (!first)
-            {
-                float solveTime = (float)s.Elapsed.TotalMilliseconds;
-                totalSolveTime += solveTime;
-                generations++;
+            //if (!first)
+            //{
+            //    float solveTime = (float)s.Elapsed.TotalMilliseconds;
+            //    totalSolveTime += solveTime;
+            //    generations++;
 
-                UnityEngine.Debug.LogError($"Solve time: {solveTime} ms | Average: {totalSolveTime / generations} ms");
-            }
+            //    UnityEngine.Debug.LogError($"Solve time: {solveTime} ms | Average: {totalSolveTime / generations} ms");
+            //}
 
             OnGameUpdated?.Invoke(gameState);
             first = false;

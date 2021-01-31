@@ -10,9 +10,6 @@ namespace GameOfLive.Logic
         private GameState resultGS;
         private ComputeBuffer currentGsBuffer, resultGsBuffer;
 
-        int[] stepsPerThread = new int[1024];
-        int[] threads = new int[2048];
-
         public ComputeSolver(ComputeShader shader) => this.shader = shader;
 
         public void Init(in GameState current)
