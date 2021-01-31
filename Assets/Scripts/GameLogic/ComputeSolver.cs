@@ -1,5 +1,4 @@
 ﻿using GameOfLive.Model;
-using System.Diagnostics;
 using UnityEngine;
 
 namespace GameOfLive.Logic
@@ -10,6 +9,9 @@ namespace GameOfLive.Logic
 
         private GameState resultGS;
         private ComputeBuffer currentGsBuffer, resultGsBuffer;
+
+        int[] stepsPerThread = new int[1024];
+        int[] threads = new int[2048];
 
         public ComputeSolver(ComputeShader shader) => this.shader = shader;
 
@@ -39,23 +41,10 @@ namespace GameOfLive.Logic
             GameState result = resultGS;
             resultGS = current;
 
-            //var s = Stopwatch.StartNew();
-            shader.Dispatch(0, 8, 8, 1);
-            //s.Stop();
-            //PrintStopwatch(s, "Dispatch");
-
-            //s.Restart();
-
+            shader.Dispatch(0, 16, 1, 1);
             resultGsBuffer.GetData(result.State);
-            //s.Stop();
-            //PrintStopwatch(s, "GetData");
 
             return result;
-        }
-
-        private void PrintStopwatch(Stopwatch stopwatch, string label)
-        {
-            UnityEngine.Debug.LogError($"{label} time: {stopwatch.Elapsed.TotalMilliseconds} ms");
         }
     }
 }

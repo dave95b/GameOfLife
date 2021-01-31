@@ -1,9 +1,14 @@
 ﻿// Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 
+#define tgX 64
+#define tgY 1
+#define threadsInGroup tgX * tgY
+#define stepsPerThread 208
+
+
 RWStructuredBuffer<uint> CurrentGS, ResultGS;
 uint Width, Height;
-
 
 int GetNeighbourCount(int x, int y)
 {
@@ -17,23 +22,27 @@ int GetNeighbourCount(int x, int y)
 		+ CurrentGS[x + 1 + (y + 1) * Width];
 }
 
-[numthreads(4,4,1)]
+int GetNeighbourCount(int i)
+{
+	return CurrentGS[i - 1 - Width]
+		+ CurrentGS[i - Width]
+		+ CurrentGS[i + 1 - Width]
+		+ CurrentGS[i - 1]
+		+ CurrentGS[i + 1]
+		+ CurrentGS[i - 1 + Width]
+		+ CurrentGS[i + Width]
+		+ CurrentGS[i + 1 + Width];
+}
+
+[numthreads(tgX,tgY,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
-	uint steps = Height / (8 * 4);
-	int start = 1 + id.x * steps;
-	int end = start + steps;
+	uint start = Width + 1 + id.x * stepsPerThread;
+	uint end = start + stepsPerThread;
 
-	uint steps2 = Width / (8 * 4);
-	int start2 = 1 + id.y * steps2;
-	int end2 = start2 + steps2;
-
-	for (int i = start; i < end; i++)
+	for (uint i = start; i < end; i++)
 	{
-		for (int j = start2; j < end2; j++)
-		{
-			int count = GetNeighbourCount(j, i);
-			ResultGS[j + i * Width] = (count == 3) | (count == 2 && CurrentGS[j + i * Width] == 1);
-		}
+		int count = GetNeighbourCount(i);
+		ResultGS[i] = (count == 3) | (count == 2 && CurrentGS[i] == 1);
 	}
 }

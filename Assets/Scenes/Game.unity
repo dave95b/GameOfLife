@@ -344,7 +344,7 @@ MonoBehaviour:
   width: 448
   height: 448
   interval: 1
-  intervalTime: 0.05
+  intervalTime: 0
   computeSolver: {fileID: 7200000, guid: 9d4ea0b5272bfa942923bf5e1bd2b058, type: 3}
 --- !u!1 &1136527013
 GameObject:
@@ -471,8 +471,8 @@ MonoBehaviour:
   viewModel: {fileID: 1030656149}
   prefab: {fileID: 1992317987055864427, guid: f2e86abe4498b424a839fa37925093d3, type: 3}
   parent: {fileID: 1382208925}
-  size: 0.07
-  spacing: 0.04
+  size: 0.035
+  spacing: 0.02
   camera: {fileID: 519420031}
 --- !u!1 &1826785985
 GameObject:
