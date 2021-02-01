@@ -3,17 +3,22 @@
 #define tX 8
 #define tY 8
 
-RWStructuredBuffer<uint> CurrentGS;
+StructuredBuffer<uint> CurrentGS;
 RWTexture2D<float4> Result;
 uint GsWidth, Size, Spacing;
 float PixelWidth, PixelHeight;
+
+static float4 colors[2] = { 
+    float4(33.0 / 255.0, 33.0 / 255.0, 33.0 / 255.0, 0.0), 
+    float4(1.0, 152.0 / 255.0, 0.0, 0.0) 
+};
 
 [numthreads(tX,tY,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
     float2 xy = id.xy * Size + id.xy * Spacing;
     uint state = CurrentGS[(id.x + 1) + (id.y + 1) * GsWidth];
-    float4 color = float4(state, state, state, 0.0);
+    float4 color = colors[state];
 
     for (int i = 0; i < Size; i++)
     {

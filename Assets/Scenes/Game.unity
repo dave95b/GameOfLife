@@ -167,8 +167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewModel: {fileID: 1030656149}
-  size: 2
-  spacing: 0
+  size: 3
+  spacing: 1
   renderShader: {fileID: 7200000, guid: 9c979880ce47c6c4fa8dbf45fdf159ae, type: 3}
   renderTexture: {fileID: 0}
   dispatcher: {fileID: 519420030}
