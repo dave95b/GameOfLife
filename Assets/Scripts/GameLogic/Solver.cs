@@ -1,4 +1,5 @@
 ﻿using GameOfLive.Model;
+using System.Threading.Tasks;
 
 namespace GameOfLive.Logic
 {
@@ -17,13 +18,15 @@ namespace GameOfLive.Logic
         public GameState Solve(in GameState current)
         {
             GameState result = other;
+            GameState current2 = current;
 
             int max = (current.Width + 2) * (current.Height + 1) - 2;
-            for (int i = current.Width + 3; i < max; i++)
+
+            Parallel.For(current.Width + 3, max, i =>
             {
-                int count = GetNeighbourCount(current, i);
-                result[i] = (byte)((count == 3) || (count == 2 && current[i] == 1) ? 1 : 0);
-            }
+                int count = GetNeighbourCount(current2, i);
+                result[i] = (byte)((count == 3) || (count == 2 && current2[i] == 1) ? 1 : 0);
+            });
 
             other = current;
 
