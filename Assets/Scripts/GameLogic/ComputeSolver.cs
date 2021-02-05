@@ -38,7 +38,11 @@ namespace GameOfLive.Logic
             GameState result = resultGS;
             resultGS = current;
 
-            shader.Dispatch(0, 16, 1, 1);
+            int min = current.Width + 3;
+            int max = (current.Width + 2) * (current.Height + 1) - 2;
+            int threadGroupsX = (max - min) / 64; 
+
+            shader.Dispatch(0, threadGroupsX, 1, 1);
             resultGsBuffer.GetData(result.State);
 
             return result;

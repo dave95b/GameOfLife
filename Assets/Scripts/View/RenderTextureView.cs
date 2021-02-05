@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Utils;
 using GameOfLive.Model;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace GameOfLive.View
 {
@@ -50,12 +52,16 @@ namespace GameOfLive.View
         {
             currentGsBuffer.SetData(gameState.State);
             renderShader.Dispatch(0, gameState.Height / 8, gameState.Width / 8, 1);
-            //renderShader.Dispatch(0, renderTexture.height / 8, renderTexture.width / 8, 1);
         }
 
         public void OnImageRendered(RenderTexture dest)
         {
             Graphics.Blit(renderTexture, dest);
+        }
+
+        private void OnDestroy()
+        {
+            renderTexture.Release();
         }
     }
 }

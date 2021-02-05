@@ -34,15 +34,10 @@ int GetNeighbourCount(int i)
 		+ CurrentGS[i + 1 + Width];
 }
 
-[numthreads(tgX,tgY,1)]
+[numthreads(tgX,1,1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
-	uint start = Width + 1 + id.x * stepsPerThread;
-	uint end = start + stepsPerThread;
-
-	for (uint i = start; i < end; i++)
-	{
-		int count = GetNeighbourCount(i);
-		ResultGS[i] = (count == 3) | (count == 2 && CurrentGS[i] == 1);
-	}
+	uint i = Width + 1 + id.x;
+	int count = GetNeighbourCount(i);
+	ResultGS[i] = (count == 3) | (count == 2 && CurrentGS[i] == 1);
 }
