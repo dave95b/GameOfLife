@@ -409,6 +409,7 @@ MonoBehaviour:
   interval: 1
   intervalTime: 0
   computeSolver: {fileID: 7200000, guid: 9d4ea0b5272bfa942923bf5e1bd2b058, type: 3}
+  useShaderSolver: 0
 --- !u!1 &1136527013
 GameObject:
   m_ObjectHideFlags: 0

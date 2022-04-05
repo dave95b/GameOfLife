@@ -1,7 +1,6 @@
 ﻿using GameOfLive.Logic;
 using GameOfLive.Model;
 using System;
-using System.Diagnostics;
 using UnityEngine;
 
 namespace GameOfLive.ViewModel
@@ -23,41 +22,24 @@ namespace GameOfLive.ViewModel
         [SerializeField]
         private ComputeShader computeSolver;
 
+        [SerializeField]
+        private bool useShaderSolver;
+
         private ISolver solver;
         private GameState gameState;
 
         private float timer;
 
-        private float totalSolveTime = 0f;
-        private int generations = 0;
-        private bool first = true;
-
         private void Awake()
         {
-            solver = new Solver();
-            //solver = new ComputeSolver(computeSolver);
+            if (useShaderSolver)
+                solver = new ComputeSolver(computeSolver);
+            else
+                solver = new Solver();
+
             gameState = new GameState(width, height);
 
             ShapeCreator.Randomize(gameState);
-
-            //for (int i = 50; i < gameState.Height - 50; i += 50)
-            //{
-            //    for (int j = 50; j < gameState.Width - 50; j += 50)
-            //        ShapeCreator.Diehard(gameState, j, i);
-            //}
-
-            //ShapeCreator.Pulsar(gameState, 4, 10);
-            //ShapeCreator.Pulsar(gameState, 20, 10);
-            //ShapeCreator.Pulsar(gameState, 4, 30);
-            //ShapeCreator.Pulsar(gameState, 20, 30);
-            //ShapeCreator.Pulsar(gameState, 4, 50);
-            //ShapeCreator.Pulsar(gameState, 20, 50);
-            //ShapeCreator.Pulsar(gameState, 4, 70);
-            //ShapeCreator.Pulsar(gameState, 20, 70);
-            //ShapeCreator.Pulsar(gameState, 4, 90);
-            //ShapeCreator.Pulsar(gameState, 20, 90);
-
-            //ShapeCreator.Rectangle(gameState, width - 2, height - 2, 1, 1);
             solver.Init(gameState);
 
             timer = intervalTime;
@@ -79,21 +61,8 @@ namespace GameOfLive.ViewModel
 
         private void Solve()
         {
-            //var s = Stopwatch.StartNew();
             gameState = solver.Solve(gameState);
-            //s.Stop();
-
-            //if (!first)
-            //{
-            //    float solveTime = (float)s.Elapsed.TotalMilliseconds;
-            //    totalSolveTime += solveTime;
-            //    generations++;
-
-            //    UnityEngine.Debug.LogError($"Solve time: {solveTime} ms | Average: {totalSolveTime / generations} ms");
-            //}
-
             OnGameUpdated?.Invoke(gameState);
-            first = false;
         }
 
         private void UpdateTimer()

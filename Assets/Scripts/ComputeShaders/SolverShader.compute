@@ -1,11 +1,7 @@
 ﻿// Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 
-#define tgX 64
-#define tgY 1
-#define threadsInGroup tgX * tgY
-#define stepsPerThread 208
-
+#define tgX 512
 
 RWStructuredBuffer<uint> CurrentGS, ResultGS;
 uint Width, Height;
